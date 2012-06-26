@@ -12,7 +12,7 @@ import org.bukkit.event.player.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 
-// Referenced classes of package com.gmail.creathir.Elevators:
+// Referenced classes of package com.github.CotisElevators.Elevators:
 //            Elevators, NetworkManagerEx, ElevatorsWaitControl, ElevatorsStore, 
 //            ElevatorSubRoutines, ElevatorsStoreFormat121
 

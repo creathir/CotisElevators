@@ -7,7 +7,7 @@ import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitScheduler;
 
-// Referenced classes of package com.gmail.creathir.Elevators:
+// Referenced classes of package com.github.CotisElevators.Elevators:
 //            Elevators
 
 public class ElevatorsValidationClass

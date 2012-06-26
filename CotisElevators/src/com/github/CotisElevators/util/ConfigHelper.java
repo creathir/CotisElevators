@@ -5,7 +5,7 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-// Referenced classes of package com.gmail.creathir.util:
+// Referenced classes of package com.github.CotisElevators.util:
 //            Configuration
 
 public class ConfigHelper

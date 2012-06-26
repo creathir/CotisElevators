@@ -1,7 +1,7 @@
 
 package com.github.CotisElevators.Elevators;
 
-import com.gmail.creathir.util.*;
+import com.github.CotisElevators.util.*;
 import java.io.*;
 import java.util.*;
 import java.util.logging.Level;
@@ -11,7 +11,7 @@ import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginDescriptionFile;
 
-// Referenced classes of package com.gmail.creathir.Elevators:
+// Referenced classes of package com.github.CotisElevators.Elevators:
 //            Elevators, ElevatorsStoreFormat121, ElevatorsMoveTask, ElevatorSubRoutines, 
 //            ElevatorsPluginCommunicator
 

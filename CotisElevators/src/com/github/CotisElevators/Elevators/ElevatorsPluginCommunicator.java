@@ -3,7 +3,7 @@ package com.github.CotisElevators.Elevators;
 
 import org.bukkit.entity.Player;
 
-// Referenced classes of package com.gmail.creathir.Elevators:
+// Referenced classes of package com.github.CotisElevators.Elevators:
 //            Elevators
 
 public class ElevatorsPluginCommunicator

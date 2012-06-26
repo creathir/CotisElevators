@@ -9,7 +9,7 @@ import net.minecraft.server.NetHandler;
 import net.minecraft.server.Packet;
 import org.bukkit.entity.Entity;
 
-// Referenced classes of package com.gmail.creathir.Elevators:
+// Referenced classes of package com.github.CotisElevators.Elevators:
 //            ElevatorsStoreFormat121
 
 public class Packet240Elevators extends Packet
@@ -20,7 +20,7 @@ public class Packet240Elevators extends Packet
         try
         {
         	
-            Field b = net.minecraft.server.Packet..getDeclaredField("b");
+            Field b = net.minecraft.server.Packet.getDeclaredField("b");
             b.setAccessible(true);
             Object fo = b.get(this);
             Map fv = (Map)fo;
@@ -172,7 +172,7 @@ public class Packet240Elevators extends Packet
         }
     }
 
-    public void a(NetHandler nethandler)
+    public void handle(NetHandler nethandler)
     {
     }
 
@@ -190,4 +190,5 @@ public class Packet240Elevators extends Packet
     public int Z1;
     public int Z2;
     public int Y;
+	
 }

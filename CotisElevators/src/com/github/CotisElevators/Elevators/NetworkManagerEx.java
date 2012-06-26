@@ -15,7 +15,7 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitScheduler;
 
-// Referenced classes of package com.gmail.creathir.Elevators:
+// Referenced classes of package com.github.CotisElevators.Elevators:
 //            ElevatorsStore, Elevators, ElevatorSubRoutines, ElevatorsMoveTask, 
 //            Packet240Elevators, ElevatorsStoreFormat121
 

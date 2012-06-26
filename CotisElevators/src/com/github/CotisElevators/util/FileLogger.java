@@ -4,7 +4,7 @@ package com.github.CotisElevators.util;
 import java.io.IOException;
 import java.util.logging.*;
 
-// Referenced classes of package com.gmail.creathir.util:
+// Referenced classes of package com.github.CotisElevators.util:
 //            CompactFormatter
 
 public class FileLogger extends Logger

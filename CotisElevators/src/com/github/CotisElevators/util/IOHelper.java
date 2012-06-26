@@ -4,7 +4,7 @@ package com.github.CotisElevators.util;
 import java.io.*;
 import java.util.*;
 
-// Referenced classes of package com.gmail.creathir.util:
+// Referenced classes of package com.github.CotisElevators.util:
 //            IOSection
 
 public class IOHelper

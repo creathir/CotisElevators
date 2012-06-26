@@ -7,7 +7,7 @@ import org.bukkit.block.Block;
 import org.bukkit.entity.*;
 import org.bukkit.inventory.ItemStack;
 
-// Referenced classes of package com.gmail.creathir.Elevators:
+// Referenced classes of package com.github.CotisElevators.Elevators:
 //            ElevatorsMoveTask, ElevatorsStoreFormat121
 
 public class ElevatorSubRoutines

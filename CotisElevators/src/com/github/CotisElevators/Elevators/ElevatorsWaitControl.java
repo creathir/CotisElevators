@@ -8,7 +8,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 
-// Referenced classes of package com.gmail.creathir.Elevators:
+// Referenced classes of package com.github.CotisElevators.Elevators:
 //            Elevators, ElevatorsStore, ElevatorsStoreFormat121
 
 public class ElevatorsWaitControl

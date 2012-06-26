@@ -18,7 +18,7 @@ import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
-// Referenced classes of package com.gmail.creathir.Elevators:
+// Referenced classes of package com.github.CotisElevators.Elevators:
 //            ElevatorsStore, NetworkManagerEx, ElevatorsWorldListener, ElevatorsBlockListener, 
 //            ElevatorsPlayerListener, ElevatorsPluginCommunicator, ElevatorsWaitControl, ElevatorsStoreFormat121, 
 //            ElevatorSubRoutines, ElevatorsMoveTask

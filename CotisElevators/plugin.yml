@@ -1,0 +1,64 @@
+name: Elevators
+main: com.gmail.creathir.Elevators.Elevators
+version: 3.0.0
+author: Creathir (Based on Elevators 1.0 by Cybran)
+description: >
+  Creates vertical moving elevators, which can be controlled by redstone currents.
+commands:
+  elevator:
+    description: Elevator command. See usage for subcommands.
+    usage: |
+      /<command> create [password <Password>] [users <UserList>]
+      /<command> remove
+      /<command> call|floor <Floorname> [password <Password>] [users <UserList>]
+      /<command> up
+      /<command> down
+      /<command> go|direct [<Floorname>]
+      /<command> redstoneout [<Floorname>]
+      /<command> glassdoor [<Floorname>] [direction <DirectionIdentifier>]
+      /<command> finish
+      /<command> glassremove [<Floorname>]
+      /<command> info
+      /<command> permission|permissions
+      /<command> pw|password [<Floorname>] [password <Password>]
+      /<command> user [<Floorname>] [users <UserList>]
+      /<command> give [<Username>]
+      /<command> lock
+  elev:
+    description: Elevator command. See usage for subcommands.
+    usage: |
+      /<command> create [password <Password>] [users <UserList>]
+      /<command> remove
+      /<command> call|floor <Floorname> [password <Password>] [users <UserList>]
+      /<command> up
+      /<command> down
+      /<command> go|direct [<Floorname>]
+      /<command> redstoneout [<Floorname>]
+      /<command> glassdoor [<Floorname>] [direction <DirectionIdentifier>]
+      /<command> finish
+      /<command> glassremove [<Floorname>]
+      /<command> info
+      /<command> permission|permissions
+      /<command> pw|password [<Floorname>] [password <Password>]
+      /<command> user [<Floorname>] [users <UserList>]
+      /<command> give [<Username>]
+      /<command> lock
+  elevators:
+    description: Elevator command. See usage for subcommands.
+    usage: |
+      /<command> create [password <Password>] [users <UserList>]
+      /<command> remove
+      /<command> call|floor <Floorname> [password <Password>] [users <UserList>]
+      /<command> up
+      /<command> down
+      /<command> go|direct [<Floorname>]
+      /<command> redstoneout [<Floorname>]
+      /<command> glassdoor [<Floorname>] [direction <DirectionIdentifier>]
+      /<command> finish
+      /<command> glassremove [<Floorname>]
+      /<command> info
+      /<command> permission|permissions
+      /<command> pw|password [<Floorname>] [password <Password>]
+      /<command> user [<Floorname>] [users <UserList>]
+      /<command> give [<Username>]
+      /<command> lock

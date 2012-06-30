@@ -20,12 +20,20 @@ public class Packet240Elevators extends Packet
         try
         {
         	
-            Field b = net.minecraft.server.Packet.getDeclaredField("b");
-            b.setAccessible(true);
-            Object fo = b.get(this);
-            Map fv = (Map)fo;
-            fv.put(getClass(), Integer.valueOf(240));
-            b.set(this, fv);
+        	
+        	Class packetClass;
+			try {
+				packetClass = Class.forName("net.minecraft.server.Packet");                
+	            Field b = packetClass.getDeclaredField("b");
+	            b.setAccessible(true);
+	            Object fo = b.get(this);
+	            //Map fv = (Map)fo;
+	            //fv.put(getClass(), Integer.valueOf(240));
+	            //b.set(this, fv);
+			} catch (ClassNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
         }
         catch(NoSuchFieldException e)
         {

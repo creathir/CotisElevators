@@ -34,7 +34,7 @@ public class ConfigHelper
                     else
                     if(starter.equals("*"))
                     {
-                        lastset = new Configuration.Setting(Result.Settings.size());
+                        lastset = Result.new Setting(Result.Settings.size());
                         lastset.name = rawline.split("=", 2)[0].trim();
                         lastset.value = rawline.split("=", 2)[1].trim();
                     } else
@@ -47,13 +47,13 @@ public class ConfigHelper
         return Result;
     }
 
-    public static transient void UpdateSetting(Configuration config, String name, String value, int type, int index, String comments[])
+    public static void UpdateSetting(Configuration config, String name, String value, int type, int index, String comments[])
     {
         Configuration.Setting setting = GetSetting(config, name);
         boolean reset = false;
         if(setting == null)
         {
-            setting = new Configuration.Setting(config, index);
+            setting = config.new Setting(index);
             reset = true;
         } else
         {

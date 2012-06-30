@@ -11,8 +11,12 @@ import org.bukkit.*;
 import org.bukkit.block.*;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.*;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.Item;
+import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
+import org.bukkit.event.Listener;
+import org.bukkit.event.entity.EntityEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.PluginManager;
@@ -58,15 +62,23 @@ public class Elevators extends JavaPlugin
         comm = new ElevatorsPluginCommunicator(this);
         wctrl = new ElevatorsWaitControl(this);
         net = new NetworkManagerEx(this);
-        PluginManager pm = server.getPluginManager();       
+        PluginManager pm = server.getPluginManager();
+        pm.registerEvents(blockListener, this);
+        pm.registerEvents(playerListener, this);
+        pm.registerEvents(worldListener, this);
+        
+        /*
+        pm.registerEvent(Event.Type., listener, priority, executor, plugin)
         pm.registerEvent(org.bukkit.event.block.BlockRedstoneEvent, blockListener, org.bukkit.event.EventPriority.NORMAL, this);
-        pm.registerEvent(org.bukkit.event.block.BlockBreakEvent, blockListener, org.bukkit.event.EventPriority.NORMAL, this);
+        pm.registerEvent(event.block.BlockBreakEvent, blockListener, org.bukkit.event.EventPriority.NORMAL, this);
         pm.registerEvent(org.bukkit.event.block.BlockPlaceEvent, blockListener, org.bukkit.event.EventPriority.NORMAL, this);
         pm.registerEvent(org.bukkit.event.player.PlayerChatEvent, playerListener, org.bukkit.event.EventPriority.LOW, this);
         pm.registerEvent(org.bukkit.event.player.PlayerInteractEvent, playerListener, org.bukkit.event.EventPriority.NORMAL, this);
         pm.registerEvent(org.bukkit.event.world.WorldLoadEvent, worldListener, org.bukkit.event.EventPriority.NORMAL, this);
         pm.registerEvent(org.bukkit.event.player.PlayerJoinEvent, playerListener, org.bukkit.event.EventPriority.NORMAL, this);
         pm.registerEvent(org.bukkit.event.player.PlayerQuitEvent, playerListener, org.bukkit.event.EventPriority.NORMAL, this);
+        */
+        
         String message = "";
         if(comm.PermissionsEnabled)
             message = (new StringBuilder(String.valueOf(message))).append(" and linked to Permissions").toString();
@@ -91,40 +103,39 @@ public class Elevators extends JavaPlugin
     public boolean onCommand(CommandSender sender, Command command, String commandLabel, String args[])
     {
         String CommandName = command.getName();
-        if(!CommandName.equalsIgnoreCase("elevator") && !CommandName.equalsIgnoreCase("elevators") && !CommandName.equalsIgnoreCase("elev"))
-            break MISSING_BLOCK_LABEL_307;
-        if(args.length <= 0)
-            break MISSING_BLOCK_LABEL_289;
-        log(Level.INFO, (new StringBuilder("command received: \"")).append(command.getName()).append(" ").append(ElevatorSubRoutines.GetList(args, " ")).append("\" by ").append((sender instanceof Player) ? ((Player)sender).getName() : "CONSOLE").toString());
-        if(!(sender instanceof Player))
-            break MISSING_BLOCK_LABEL_232;
-        if(!args[0].equals("NetworkPacket"))
-            break MISSING_BLOCK_LABEL_156;
-        net.ActivateClient((Player)sender, args);
-        return true;
-        try
-        {
-            args = store.commands.Substitute(args);
-            log(Level.INFO, (new StringBuilder("command translated to: \"")).append(command.getName()).append(" ").append(ElevatorSubRoutines.GetList(args, " ")).append("\"").toString());
-            return AnalyzeCommands(args, (Player)sender);
-        }
-        catch(Exception e)
-        {
-            e.printStackTrace();
-        }
-        break MISSING_BLOCK_LABEL_298;
-        if(!args[0].equalsIgnoreCase("info"))
-            break MISSING_BLOCK_LABEL_278;
-        if(store.InfoFile())
-            sender.sendMessage("Elevator's debugging info file created. \\plugins\\elevators\\DebuggingInfo.txt");
-        else
-            sender.sendMessage("Error while creating debugging info file!");
-        return true;
-        sender.sendMessage("This command can be only accessed by players.");
-        return false;
-        return false;
-        sender.sendMessage("WARNING: Elevators - command analyzation exception.");
-        return false;
+        //log(Level.INFO, (new StringBuilder("command translated to: \"")).append(command.getName()).append("\" with args: \"").append(ElevatorSubRoutines.GetList(args, " ")).append("\"").toString());
+        if(CommandName.equalsIgnoreCase("elevator") || CommandName.equalsIgnoreCase("elevators") || CommandName.equalsIgnoreCase("elev")){
+        	 try
+             {
+                 args = store.commands.Substitute(args);
+                 log(Level.INFO, (new StringBuilder("command translated to: \"")).append(command.getName()).append(" ").append(ElevatorSubRoutines.GetList(args, " ")).append("\"").toString());
+                 return AnalyzeCommands(args, (Player)sender);
+             }
+             catch(Exception e)
+             {
+                 e.printStackTrace();
+             }
+             sender.sendMessage("WARNING: Elevators - command analyzation exception.");
+        	 return false;
+        	 
+        }else if(args.length <= 0){
+        	log(Level.INFO, (new StringBuilder("command received: \"")).append(command.getName()).append(" ").append(ElevatorSubRoutines.GetList(args, " ")).append("\" by ").append((sender instanceof Player) ? ((Player)sender).getName() : "CONSOLE").toString());
+        	return true;
+        }else if(!(sender instanceof Player)){
+            sender.sendMessage("This command can be only accessed by players.");
+            return false;
+        }else if(!args[0].equals("NetworkPacket")){        	
+        	net.ActivateClient((Player)sender, args);
+        	return true;
+        }else if(!args[0].equalsIgnoreCase("info")){
+        	return false;
+        }else{
+        	if(store.InfoFile())
+        		sender.sendMessage("Elevator's debugging info file created. \\plugins\\elevators\\DebuggingInfo.txt");
+        	else
+        		sender.sendMessage("Error while creating debugging info file!");        	
+        	return true;
+        }        
     }
 
     private boolean AnalyzeCommands(String commands[], Player player)
@@ -620,7 +631,7 @@ public class Elevators extends JavaPlugin
         if((!Elev.password.equals(elevpw) || !CallBlock.password.equals(floorpw)) && !ConfigHelper.GetBoolean(store.config, "ignore-passwords") && !validop)
         {
             Player player;
-            for(Iterator iterator1 = players.iterator(); iterator1.hasNext(); new ElevatorsPlayerListener.PasswordControl(playerListener, Elev, CallBlock, callloc, elevpw, player))
+            for(Iterator iterator1 = players.iterator(); iterator1.hasNext(); playerListener.new PasswordControl(Elev, CallBlock, callloc, elevpw, player))
                 player = (Player)iterator1.next();
 
             return;
@@ -1035,7 +1046,6 @@ label0:
             if(block.getTypeId() != 20)
                 GlassRemoves.add(GlassBlock);
         }
-        ElevatorsStoreFormat121.ElevatorsStoreFormatBlock121 RemBlock;
         for(Iterator iterator4 = GlassRemoves.iterator(); iterator4.hasNext(); store.RemoveGlassDoor(Elev, RemBlock))
             RemBlock = (ElevatorsStoreFormat121.ElevatorsStoreFormatBlock121)iterator4.next();
 
@@ -1232,7 +1242,7 @@ label0:
                 }
                 if(!added)
                 {
-                    ElevatorsMoveTask.GlassDoorSide tmp = new ElevatorsMoveTask.GlassDoorSide(MoveTask, newID, MoveTask);
+                    ElevatorsMoveTask.GlassDoorSide tmp = MoveTask.new GlassDoorSide(newID, MoveTask);
                     tmp.glassblocks.add(GlassBlock);
                     tmp.refX = GlassBlock.BlockX;
                     tmp.refZ = GlassBlock.BlockZ;

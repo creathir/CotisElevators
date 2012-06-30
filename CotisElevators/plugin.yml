@@ -1,5 +1,5 @@
 name: Elevators
-main: com.gmail.creathir.Elevators.Elevators
+main: com.github.CotisElevators.Elevators.Elevators
 version: 3.0.0
 author: Creathir (Based on Elevators 1.0 by Cybran)
 description: >

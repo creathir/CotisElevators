@@ -345,54 +345,63 @@ public class ElevatorsStore
     {
         ElevatorsStoreFormat121.ElevatorsStoreFormatElevator121 Elev;
         Iterator iterator;
-        Elev = new ElevatorsStoreFormat121.ElevatorsStoreFormatElevator121(data, IOHelper.ReadInteger(inputElev, "elX1", 0), IOHelper.ReadInteger(inputElev, "elX2", 0), IOHelper.ReadInteger(inputElev, "elY", 0), IOHelper.ReadInteger(inputElev, "elZ1", 0), IOHelper.ReadInteger(inputElev, "elZ2", 0), IOHelper.ReadInteger(inputElev, "elType", 0), IOHelper.ReadByte(inputElev, "elData", (byte)0), IOHelper.ReadString(inputElev, "elWorld", ""), IOHelper.ReadInteger(inputElev, "selfID", 0), IOHelper.ReadInteger(inputElev, "StoreVersion", 10402), IOHelper.ReadString(inputElev, "owner", ""));
+        Elev = new ElevatorsStoreFormat121().new ElevatorsStoreFormatElevator121(IOHelper.ReadInteger(inputElev, "elX1", 0), IOHelper.ReadInteger(inputElev, "elX2", 0), IOHelper.ReadInteger(inputElev, "elY", 0), IOHelper.ReadInteger(inputElev, "elZ1", 0), IOHelper.ReadInteger(inputElev, "elZ2", 0), IOHelper.ReadInteger(inputElev, "elType", 0), IOHelper.ReadByte(inputElev, "elData", (byte)0), IOHelper.ReadString(inputElev, "elWorld", ""), IOHelper.ReadInteger(inputElev, "selfID", 0), IOHelper.ReadInteger(inputElev, "StoreVersion", 10402), IOHelper.ReadString(inputElev, "owner", ""));
         iterator = data.Database.iterator();
-          goto _L1
-_L4:
-        ElevatorsStoreFormat121.ElevatorsStoreFormatElevator121 existing = (ElevatorsStoreFormat121.ElevatorsStoreFormatElevator121)iterator.next();
-        if(existing.selfID != Elev.selfID) goto _L1; else goto _L2
-_L2:
-        if(existing.elWorld.equals(""))
+        Boolean canInit = false;
+        while (canInit == false)
         {
-            ElevatorsMoveTask MoveTask = plugin.GetMoveTask(existing);
-            if(MoveTask != null)
-            {
-                MoveTask.clear();
-                plugin.MoveTasks.remove(MoveTask);
-            }
-            data.Database.remove(existing);
-            dropped++;
-            break; /* Loop/switch isn't completed */
+	        if(iterator.hasNext())
+	        {
+	        	ElevatorsStoreFormat121.ElevatorsStoreFormatElevator121 existing = (ElevatorsStoreFormat121.ElevatorsStoreFormatElevator121)iterator.next();
+	            if(existing.selfID == Elev.selfID) 
+	            {
+	            	if(existing.elWorld.equals(""))
+	                {
+	                    ElevatorsMoveTask MoveTask = plugin.GetMoveTask(existing);
+	                    if(MoveTask != null)
+	                    {
+	                        MoveTask.clear();
+	                        plugin.MoveTasks.remove(MoveTask);
+	                    }
+	                    data.Database.remove(existing);
+	                    dropped++;
+	                    break; /* Loop/switch isn't completed */
+	                }
+	                Elev = null;
+	                return null;
+	            }
+	        }else{
+	        	canInit = true;
+	        }
+	        
         }
-        Elev = null;
-        return null;
-_L1:
-        if(iterator.hasNext()) goto _L4; else goto _L3
-_L3:
-        Elev.password = IOHelper.ReadString(inputElev, "password", "");
-        Elev.users = IOHelper.ReadStringList(inputElev, "users", null);
-        Elev.nextblockID = IOHelper.ReadInteger(inputElev, "nextblockID", Elev.nextblockID);
-        Elev.nextbuildID = IOHelper.ReadInteger(inputElev, "nextbuildID", Elev.nextbuildID);
-        Elev.nextglassID = IOHelper.ReadInteger(inputElev, "nextglassID", Elev.nextglassID);
-        Elev.locked = IOHelper.ReadBoolean(inputElev, "locked", false);
-        data.Database.add(Elev);
-        IOSection inputBuildBlocks = IOHelper.GetSubSection(inputElev, "BuildBlocks");
-        if(inputBuildBlocks != null)
+        try
         {
-            Elev.BuildBlocks = new ArrayList();
-            ReadElevatorBlocks(inputBuildBlocks, Elev.BuildBlocks);
+	        Elev.password = IOHelper.ReadString(inputElev, "password", "");
+	        Elev.users = IOHelper.ReadStringList(inputElev, "users", null);
+	        Elev.nextblockID = IOHelper.ReadInteger(inputElev, "nextblockID", Elev.nextblockID);
+	        Elev.nextbuildID = IOHelper.ReadInteger(inputElev, "nextbuildID", Elev.nextbuildID);
+	        Elev.nextglassID = IOHelper.ReadInteger(inputElev, "nextglassID", Elev.nextglassID);
+	        Elev.locked = IOHelper.ReadBoolean(inputElev, "locked", false);
+	        data.Database.add(Elev);
+	        IOSection inputBuildBlocks = IOHelper.GetSubSection(inputElev, "BuildBlocks");
+	        if(inputBuildBlocks != null)
+	        {
+	            Elev.BuildBlocks = new ArrayList();
+	            ReadElevatorBlocks(inputBuildBlocks, Elev.BuildBlocks);
+	        }
+	        IOSection inputSpecialBlocks = IOHelper.GetSubSection(inputElev, "SpecialBlocks");
+	        ReadElevatorBlocks(inputSpecialBlocks, Elev.SpecialBlocks);
+	        IOSection inputGlassDoors = IOHelper.GetSubSection(inputElev, "GlassDoors");
+	        if(inputGlassDoors != null)
+	            ReadElevatorBlocks(inputGlassDoors, Elev.GlassDoors);
+	        return Elev;
+        }catch(Exception e)
+        {
+        	e.printStackTrace();
+        	plugin.OpWarning((new StringBuilder("Elevators - Store - Section missing! (file\"")).append(filename).append("\")").toString());
+        	return null;
         }
-        IOSection inputSpecialBlocks = IOHelper.GetSubSection(inputElev, "SpecialBlocks");
-        ReadElevatorBlocks(inputSpecialBlocks, Elev.SpecialBlocks);
-        IOSection inputGlassDoors = IOHelper.GetSubSection(inputElev, "GlassDoors");
-        if(inputGlassDoors != null)
-            ReadElevatorBlocks(inputGlassDoors, Elev.GlassDoors);
-        return Elev;
-        Exception e;
-        e;
-        e.printStackTrace();
-        plugin.OpWarning((new StringBuilder("Elevators - Store - Section missing! (file\"")).append(filename).append("\")").toString());
-        return null;
     }
 
     private void ReadElevatorBlocks(IOSection Section, ArrayList BlockStore)
@@ -568,7 +577,7 @@ _L3:
     public ElevatorsStoreFormat121.ElevatorsStoreFormatElevator121 AddElevator(int X1, int X2, int Y, int Z1, int Z2, int type, byte Data, 
             String world, String owner)
     {
-        ElevatorsStoreFormat121.ElevatorsStoreFormatElevator121 Elev = new ElevatorsStoreFormat121.ElevatorsStoreFormatElevator121(X1, X2, Y, Z1, Z2, type, Data, world, data.nextelID, 10402, owner);       
+        ElevatorsStoreFormat121.ElevatorsStoreFormatElevator121 Elev = new ElevatorsStoreFormat121().new ElevatorsStoreFormatElevator121(X1, X2, Y, Z1, Z2, type, Data, world, data.nextelID, 10402, owner);       
         data.Database.add(Elev);
         ElevatorsMoveTask MoveTask = new ElevatorsMoveTask(plugin, Elev, ConfigHelper.GetFloat(config, "WaitTime"), ConfigHelper.GetInteger(config, "ButtonPressTime"));
         MoveTask.curY = Y;
@@ -660,7 +669,8 @@ _L3:
     {
         ElevatorsStoreFormat121.ElevatorsStoreFormatBlock121 Result = new ElevatorsStoreFormat121.ElevatorsStoreFormatBlock121(X, Y, Z, Type, (byte)0, Parameter, Elev.nextblockID, tID, rel);
         Elev.SpecialBlocks.add(Result);
-        plugin.GetMoveTask(Elev).PressedTimes.add(new ElevatorsMoveTask.MoveTaskCounter(plugin.GetMoveTask(Elev), Elev.nextblockID, plugin.GetMoveTask(Elev)));
+        ElevatorsMoveTask tmpTask = plugin.GetMoveTask(Elev);
+		tmpTask.PressedTimes.add(tmpTask.new MoveTaskCounter(Elev.nextblockID, plugin.GetMoveTask(Elev)));
         Elev.nextblockID++;
         WriteStore(Elev);
         if(Type == 0 && plugin.GetMoveTask(Elev).curY == Y - 2)

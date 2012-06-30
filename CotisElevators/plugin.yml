@@ -1,6 +1,6 @@
 name: Elevators
 main: com.github.CotisElevators.Elevators.Elevators
-version: 3.0.0
+version: 3.0.1
 author: Creathir (Based on Elevators 1.0 by Cybran)
 description: >
   Creates vertical moving elevators, which can be controlled by redstone currents.

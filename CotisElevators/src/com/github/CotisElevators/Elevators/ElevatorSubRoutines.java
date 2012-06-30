@@ -157,8 +157,8 @@ label0:
             return MoveTask.curY;
         int Matches = 0;
         int Result = -2;
-        int diff = 128;
-        for(int iY = 0; iY < 128; iY++)
+        int diff = 256;
+        for(int iY = 0; iY < 256; iY++)
         {
             int curmat = CheckElevatorPosition(MoveTask, iY);
             if(curmat > Matches || curmat == Matches && Math.abs(iY - MoveTask.curY) < diff)
@@ -244,7 +244,7 @@ label0:
     public static int[] GetElevatorYBounds(ElevatorsStoreFormat121.ElevatorsStoreFormatElevator121 Elev)
     {
         int Result[] = {
-            128, 0
+            256, 0
         };
         for(Iterator iterator = Elev.SpecialBlocks.iterator(); iterator.hasNext();)
         {
@@ -303,7 +303,7 @@ label0:
     public static ElevatorsStoreFormat121.ElevatorsStoreFormatBlock121 GetNextFloorUp(ElevatorsStoreFormat121.ElevatorsStoreFormatElevator121 Elev, int Y, int Times, int tol)
     {
         ElevatorsStoreFormat121.ElevatorsStoreFormatBlock121 CallBlock = null;
-        int curY = 128;
+        int curY = 256;
         for(Iterator iterator = Elev.SpecialBlocks.iterator(); iterator.hasNext();)
         {
             ElevatorsStoreFormat121.ElevatorsStoreFormatBlock121 SpecialBlock = (ElevatorsStoreFormat121.ElevatorsStoreFormatBlock121)iterator.next();
@@ -589,7 +589,7 @@ label0:
     public static boolean CheckDependence(BlockDependenceClass list, World world, int X, int Y, int Z, int X1, int X2, int nY, 
             int Z1, int Z2)
     {
-        if(X < X2 || X > X1 || Z < Z2 || Z > Z1 || Y > 128)
+        if(X < X2 || X > X1 || Z < Z2 || Z > Z1 || Y > 256)
             return false;
         int prevdependence = list.IsDependent(X, Y, Z);
         if(prevdependence > -1)
@@ -636,7 +636,7 @@ label0:
     {
         ArrayList Result = new ArrayList();
         BlockDependenceClass blocklist = new BlockDependenceClass();
-        for(int iY = nY + 1; iY < 128; iY++)
+        for(int iY = nY + 1; iY < 256; iY++)
         {
             boolean isActive = false;
             for(int iX = X2; iX <= X1; iX++)
